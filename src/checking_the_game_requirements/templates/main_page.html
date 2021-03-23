@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %} Main Page {% endblock %}
+{% block content %}
+    <div align="center">
+        <form action="{% url 'list_games' %}">
+                    <button type="submit" name="button" value="game">Games</button>
+             </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %} Check Game {% endblock %}
+{% block content %}
+    <div align="center">
+        <p>Selected Game</p>
+        <table border=1>
+            <tr>
+                <td><div align="center">Game</div></td>
+                <td><div align="center">Processor</div></td>
+                <td><div align="center">Memory</div></td>
+                <td><div align="center">Video card</div></td>
+                <td><div align="center">Video memory</div></td>
+            </tr>
+                {% for game in games %}
+            <tr>
+                <td><div align="center">{{ game.name }}</div></td>
+                <td><div align="center">{{ game.processor }}</div></td>
+                <td><div align="center">{{ game.memory }}</div></td>
+                <td><div align="center">{{ game.video_card_name }}</div></td>
+                <td><div align="center">{{ game.video_card_memory }}</div></td>
+            </tr>
+                {% endfor %}
+        </table>
+        <p>Select your PC components</p>
+            <form action="{% url 'filter_components' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Check" name="button">
+            </form>
+
+
+        <p></p>
+        <form action="{% url 'list_games' %}">
+                    <button type="submit" name="button" value="games">Games</button>
+             </form>
+    </div>
+{% endblock %}

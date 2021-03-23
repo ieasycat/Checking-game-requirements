@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %} Games Page {% endblock %}
+{% block content %}
+    <div align="center">
+        <table border=1>
+            <tr>
+                <td><div align="center">ID</div></td>
+                <td><div align="center">Game</div></td>
+                <td><div align="center">Processor</div></td>
+                <td><div align="center">Memory</div></td>
+                <td><div align="center">Video card</div></td>
+                <td><div align="center">Video memory</div></td>
+                <td><div align="center">Options</div></td>
+            </tr>
+        {% for game in games %}
+            <tr>
+                <td><div align="center">{{ game.pk }}</div></td>
+                <td><div align="center">{{ game.name }}</div></td>
+                <td><div align="center">{{ game.processor }}</div></td>
+                <td><div align="center">{{ game.memory }}</div></td>
+                <td><div align="center">{{ game.video_card_name }}</div></td>
+                <td><div align="center">{{ game.video_card_memory }}</div></td>
+                <td>
+                    <form action="{% url 'check_game' game.id %}">
+                    <input type="submit" value="Check">
+                    </form>
+                </td>
+            </tr>
+
+        {% endfor %}
+        </table>
+        <p></p>
+        <form action="{% url 'display_main' %}">
+                    <input type="submit" value="Return main page">
+        </form>
+    </div>
+{% endblock %}
