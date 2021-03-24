@@ -5,5 +5,5 @@ urlpatterns = [
     path('main', display_main, name='display_main'),
     path('games', list_games, name='list_games'),
     path('check_game/<int:my_id>', check_game, name='check_game'),
-    path('filter_components>', filter_components, name='filter_components'),
+    path('filter_components', filter_components, name='filter_components'),
 ]
