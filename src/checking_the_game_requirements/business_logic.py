@@ -1,5 +1,5 @@
 from checking_the_game_requirements.forms import PROCESSOR_CHOICES, MEMORY_CHOICES, VIDEO_CARD_CHOICES
-from checking_the_game_requirements.models import Processor, Memory, VideoCard, Game
+from checking_the_game_requirements.models import Processor, Memory, VideoCard
 
 
 def filter_values(data):
@@ -30,21 +30,27 @@ def filter_values(data):
         return context
 
 
-def check(game_proc, user_proc):
+def check_proc(game_proc, user_proc):
     game_processor = Processor.objects.filter(name=game_proc)
-    game_memory = []
     game_video_card = []
 
     user_processor = Processor.objects.filter(name=user_proc)
-    user_memory = []
     user_video_card = []
 
-    print(game_proc, user_proc)
+    print(f"2 {game_processor[0].frequency}")
+    print(f"2 {user_processor[0].frequency}")
 
-    print(f"2 {user_processor}")
-    print(f"2 {game_processor}")
-
-    if game_proc == user_proc:
+    if game_processor[0] == user_processor[0]:
         print('WOW')
+    else:
+        if game_processor[0].frequency > user_processor[0].frequency:
+            print('Net')
+        else:
+            print('Yes')
 
-    return game_processor
+
+def check_memory(game_mem, user_mem):
+    if game_mem > user_mem:
+        print('Net')
+    else:
+        print('Yes')

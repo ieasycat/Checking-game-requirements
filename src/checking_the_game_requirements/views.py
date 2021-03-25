@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from checking_the_game_requirements.business_logic import filter_values, check
+from checking_the_game_requirements.business_logic import filter_values, check_proc, check_memory
 from checking_the_game_requirements.models import Game
 from checking_the_game_requirements.forms import SearchForm
 
@@ -43,13 +43,13 @@ def filter_components(request):
 
     tmp = processor[0].split(' ')
 
-    print(tmp)
+    # print(tmp)
 
     if request.method == 'POST':
         data = SearchForm(request.POST)
         context = filter_values(data)
 
-        print(f"1 {context['processor'].name}")
-        print('3', check(tmp[5], context['processor'].name))
+        check_proc(tmp[5], context['processor'].name)
+        check_memory(memory, context['memory'].size_memory)
 
         return HttpResponse(f"{context['processor']} - {context['memory']} - {context['video_card']}")
