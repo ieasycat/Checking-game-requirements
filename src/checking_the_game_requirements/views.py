@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from checking_the_game_requirements.business_logic import filter_values, check_proc, check_memory
+from checking_the_game_requirements.business_logic import filter_values, check_proc, check_memory, check_video
 from checking_the_game_requirements.models import Game
 from checking_the_game_requirements.forms import SearchForm
 
@@ -26,7 +26,7 @@ def check_game(request, my_id):
     request.session['memory'] = game('memory')[0]['memory']
     request.session['video_card_name'] = game('video_card_name')[0]['video_card_name'].split('/')
     request.session['video_card_memory'] = game('video_card_memory')[0]['video_card_memory']
-    request.session['video'] = game('video_card_name')[0]['video_card_name'].split('/')
+    # request.session['video'] = game('video_card_name')[0]['video_card_name'].split('/')
 
     context = {'games': game,
                'form': SearchForm(),
@@ -39,11 +39,14 @@ def filter_components(request):
     memory = request.session.get('memory')
     video_card_name = request.session.get('video_card_name')
     video_card_memory = request.session.get('video_card_memory')
-    video = request.session.get('video')
+    # video = request.session.get('video')
 
     tmp = processor[0].split(' ')
+    tmp2 = ' '.join(video_card_name[0].split(' ')[1:])
 
     # print(tmp)
+    print(tmp2)
+    print(video_card_memory)
 
     if request.method == 'POST':
         data = SearchForm(request.POST)
@@ -51,5 +54,6 @@ def filter_components(request):
 
         check_proc(tmp[5], context['processor'].name)
         check_memory(memory, context['memory'].size_memory)
+        check_video(tmp2, context['video_card'])
 
         return HttpResponse(f"{context['processor']} - {context['memory']} - {context['video_card']}")

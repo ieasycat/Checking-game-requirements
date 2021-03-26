@@ -32,10 +32,8 @@ def filter_values(data):
 
 def check_proc(game_proc, user_proc):
     game_processor = Processor.objects.filter(name=game_proc)
-    game_video_card = []
 
     user_processor = Processor.objects.filter(name=user_proc)
-    user_video_card = []
 
     print(f"2 {game_processor[0].frequency}")
     print(f"2 {user_processor[0].frequency}")
@@ -43,14 +41,34 @@ def check_proc(game_proc, user_proc):
     if game_processor[0] == user_processor[0]:
         print('WOW')
     else:
-        if game_processor[0].frequency > user_processor[0].frequency:
-            print('Net')
-        else:
+        if game_processor[0].frequency <= user_processor[0].frequency:
             print('Yes')
+        else:
+            print('No')
 
 
 def check_memory(game_mem, user_mem):
-    if game_mem > user_mem:
-        print('Net')
-    else:
+    if game_mem <= user_mem:
         print('Yes')
+    else:
+        print('No')
+
+
+def check_video(game_video, user_video):
+    # game_video_card = VideoCard.objects.filter(name=game_video)
+    game_video_card = list_video(game_video)
+    user_video_card = list_video(user_video.name)
+    # user_video_card = VideoCard.objects.filter(name=user_video)
+
+    print('check_one', game_video, user_video.name)
+    print(game_video_card)
+
+    print(user_video_card)
+
+
+def list_video(video_card):
+    print('list', video_card)
+    video_cards = VideoCard.objects.all()
+    for video in range(len(video_cards)):
+        if f'{video_card}' in video_cards[video].name:
+            return video_cards[video]
