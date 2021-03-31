@@ -30,45 +30,50 @@ def filter_values(data):
         return context
 
 
-def check_proc(game_proc, user_proc):
-    game_processor = Processor.objects.filter(name=game_proc)
+def check_proc(game_proc_one, game_proc_two, user_proc):
+    game_processor_one = Processor.objects.filter(name=game_proc_one)
+    game_processor_two = Processor.objects.filter(name=game_proc_two)
 
     user_processor = Processor.objects.filter(name=user_proc)
 
-    print(f"2 {game_processor[0].frequency}")
-    print(f"2 {user_processor[0].frequency}")
-
-    if game_processor[0] == user_processor[0]:
-        print('WOW')
+    if game_processor_one[0] == user_processor[0] \
+            or game_processor_two[0] == user_processor[0]:
+        return 'OK'
     else:
-        if game_processor[0].frequency <= user_processor[0].frequency:
-            print('Yes')
+        if game_processor_one[0].benchmarking <= user_processor[0].benchmarking \
+                or game_processor_two[0].benchmarking <= user_processor[0].benchmarking:
+            return 'OK'
         else:
-            print('No')
+            return 'NO'
+
+
+def proc_output(processor):
+    proc = Processor.objects.filter(name=processor)
+    return f'{proc[0].brand.name} {proc[0].name}'
+
+
+def video_output(video_card):
+    video = VideoCard.objects.filter(name=video_card)
+    return f'{video[0].brand.name} {video[0].name}'
 
 
 def check_memory(game_mem, user_mem):
     if game_mem <= user_mem:
-        print('Yes')
+        return 'OK'
     else:
-        print('No')
+        return 'NO'
 
 
-def check_video(game_video, user_video):
-    # game_video_card = VideoCard.objects.filter(name=game_video)
-    game_video_card = list_video(game_video)
-    user_video_card = list_video(user_video.name)
-    # user_video_card = VideoCard.objects.filter(name=user_video)
+def check_video(game_video_one, game_video_two, user_video):
+    game_video_card_one = VideoCard.objects.filter(name=game_video_one)
+    game_video_card_two = VideoCard.objects.filter(name=game_video_two)
+    user_video_card = VideoCard.objects.filter(name=user_video)
 
-    print('check_one', game_video, user_video.name)
-    print(game_video_card)
-
-    print(user_video_card)
-
-
-def list_video(video_card):
-    print('list', video_card)
-    video_cards = VideoCard.objects.all()
-    for video in range(len(video_cards)):
-        if f'{video_card}' in video_cards[video].name:
-            return video_cards[video]
+    if user_video_card == game_video_card_one or user_video_card == game_video_card_two:
+        return 'OK'
+    else:
+        if user_video_card[0].benchmarking >= game_video_card_one[0].benchmarking \
+                or user_video_card[0].benchmarking >= game_video_card_two[0].benchmarking:
+            return 'OK'
+        else:
+            return 'NO'

@@ -22,7 +22,7 @@ VIDEO_CARD_CHOICES = (
     ('2', 'AMD Gigabyte Radeon RX 5500 XT OC 4GB GDDR6'),
     ('3', 'NVIDIA MSI GeForce GTX 1650 Super Gaming X 4GB GDDR6'),
     ('4', 'NVIDIA Palit GeForce RTX 3060 Dual OC 12GB GDDR6'),
-    ('5', 'NVIDIA Galaxy GeForce GTX 670 GC 4GB GDDR5'),
+    ('5', 'NVIDIA Gigabyte GeForce GTX 670 OC 2GB GDDR5'),
     ('6', 'AMD Sapphire HD 7950 3GB GDDR5'),
 )
 

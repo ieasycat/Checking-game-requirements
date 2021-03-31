@@ -14,6 +14,10 @@ class Processor(models.Model):
     name = models.CharField(max_length=50)
     socket = models.CharField(max_length=20)
     frequency = models.IntegerField()
+
+    # check cpu.json 'cpumark'
+    benchmarking = models.IntegerField(null=True)
+
     brand = models.ForeignKey(
         BrandsProcessor,
         null=True,
@@ -22,8 +26,8 @@ class Processor(models.Model):
     )
 
     def __str__(self):
-        return f'{self.pk} - {self.name} - {self.socket} - ' \
-               f'{self.frequency} - {self.brand.name}'
+        return f'{self.pk} - {self.brand.name} - {self.name} - ' \
+               f'{self.socket} - {self.frequency} - {self.benchmarking}'
 
 
 class BrandsMemory(models.Model):
@@ -61,6 +65,10 @@ class VideoCard(models.Model):
     name = models.CharField(max_length=50)
     size_memory = models.IntegerField()
     frequency = models.IntegerField()
+
+    # check gpu.json 'g3d'
+    benchmarking = models.IntegerField(null=True)
+
     brand = models.ForeignKey(
         BrandsVideoCard,
         null=True,
@@ -69,17 +77,34 @@ class VideoCard(models.Model):
     )
 
     def __str__(self):
-        return f'{self.pk} - {self.name} - {self.size_memory} - ' \
-               f'{self.frequency} - {self.brand.name}'
+        return f'{self.pk} - {self.brand.name} - {self.name} - ' \
+               f'{self.size_memory} - {self.frequency} - {self.benchmarking}'
 
 
 class Game(models.Model):
     name = models.CharField(max_length=50)
-    processor = models.CharField(max_length=50)
+    processor_one = models.ManyToManyField(
+        'Processor',
+        related_name='processor_one'
+    )
+    processor_two = models.ManyToManyField(
+        'Processor',
+        related_name='processor_two'
+    )
     memory = models.IntegerField()
-    video_card_name = models.CharField(max_length=100)
-    video_card_memory = models.IntegerField()
+    video_card_one = models.ManyToManyField(
+        'VideoCard',
+        related_name='card_one'
+    )
+    video_card_two = models.ManyToManyField(
+        'VideoCard',
+        related_name='card_two'
+    )
 
     def __str__(self):
-        return f'{self.pk} - {self.name} - {self.processor} - ' \
-               f'{self.memory} - {self.video_card_name} - {self.video_card_memory}'
+        return f'{self.pk} - {self.name} - ' \
+               f'{self.processor_one.first().brand.name} {self.processor_one.first().name} - ' \
+               f'{self.processor_two.first().brand.name} {self.processor_two.first().name} - ' \
+               f'{self.memory} - ' \
+               f'{self.video_card_one.first().brand.name} {self.video_card_one.first().name} - ' \
+               f'{self.video_card_two.first().brand.name} {self.video_card_two.first().name}'

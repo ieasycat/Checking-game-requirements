@@ -2,8 +2,15 @@
 {% block title %} Main Page {% endblock %}
 {% block content %}
     <div align="center">
+        <p>Click to get a list of games.</p>
         <form action="{% url 'list_games' %}">
                     <button type="submit" name="button" value="game">Games</button>
              </form>
+        <p>Or choose your hardware and we will select the games that will go on it.</p>
+        <form action="{% url 'display_main' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Check" name="button">
+            </form>
     </div>
 {% endblock %}

@@ -2,24 +2,33 @@
 {% block title %} Games Page {% endblock %}
 {% block content %}
     <div align="center">
+        <p>List of Games.</p>
         <table border=1>
             <tr>
-                <td><div align="center">ID</div></td>
                 <td><div align="center">Game</div></td>
-                <td><div align="center">Processor</div></td>
+                <td><div align="center">Processor One</div></td>
+                <td><div align="center">Processor Two</div></td>
                 <td><div align="center">Memory</div></td>
-                <td><div align="center">Video card</div></td>
-                <td><div align="center">Video memory</div></td>
+                <td><div align="center">VideoCard One</div></td>
+                <td><div align="center">VideoCard Two</div></td>
                 <td><div align="center">Options</div></td>
             </tr>
         {% for game in games %}
             <tr>
-                <td><div align="center">{{ game.pk }}</div></td>
                 <td><div align="center">{{ game.name }}</div></td>
-                <td><div align="center">{{ game.processor }}</div></td>
+                <td><div align="center">
+                    {{ game.processor_one.first.brand.name  }} {{ game.processor_one.first.name }}
+                </div></td>
+                <td><div align="center">
+                    {{ game.processor_two.first.brand.name  }} {{ game.processor_two.first.name }}
+                </div></td>
                 <td><div align="center">{{ game.memory }}</div></td>
-                <td><div align="center">{{ game.video_card_name }}</div></td>
-                <td><div align="center">{{ game.video_card_memory }}</div></td>
+                <td><div align="center">
+                    {{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}
+                </div></td>
+                <td><div align="center">
+                    {{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}
+                </div></td>
                 <td>
                     <form action="{% url 'check_game' game.id %}">
                     <input type="submit" value="Check">

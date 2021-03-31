@@ -1,5 +1,6 @@
 from django.urls import path
-from checking_the_game_requirements.views import list_games, check_game, display_main, filter_components
+from checking_the_game_requirements.views import list_games, \
+    check_game, display_main, filter_components
 
 urlpatterns = [
     path('main', display_main, name='display_main'),

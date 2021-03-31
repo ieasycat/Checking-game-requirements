@@ -2,23 +2,31 @@
 {% block title %} Check Game {% endblock %}
 {% block content %}
     <div align="center">
-        <p>Selected Game</p>
+        <p>Selected Game.</p>
         <table border=1>
             <tr>
                 <td><div align="center">Game</div></td>
-                <td><div align="center">Processor</div></td>
+                <td><div align="center">Processor One</div></td>
+                <td><div align="center">Processor Two</div></td>
                 <td><div align="center">Memory</div></td>
-                <td><div align="center">Video card</div></td>
-                <td><div align="center">Video memory</div></td>
+                <td><div align="center">VideoCard One</div></td>
+                <td><div align="center">VideoCard Two</div></td>
             </tr>
                 {% for game in games %}
-            <tr>
-                <td><div align="center">{{ game.name }}</div></td>
-                <td><div align="center">{{ game.processor }}</div></td>
-                <td><div align="center">{{ game.memory }}</div></td>
-                <td><div align="center">{{ game.video_card_name }}</div></td>
-                <td><div align="center">{{ game.video_card_memory }}</div></td>
-            </tr>
+                    <td><div align="center">{{ game.name }}</div></td>
+                    <td><div align="center">
+                        {{ game.processor_one.first.brand.name  }} {{ game.processor_one.first.name }}
+                    </div></td>
+                    <td><div align="center">
+                        {{ game.processor_two.first.brand.name  }} {{ game.processor_two.first.name }}
+                    </div></td>
+                    <td><div align="center">{{ game.memory }}</div></td>
+                    <td><div align="center">
+                        {{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}
+                    </div></td>
+                    <td><div align="center">
+                        {{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}
+                </div></td>
                 {% endfor %}
         </table>
         <p>Select your PC components</p>
@@ -31,7 +39,7 @@
 
         <p></p>
         <form action="{% url 'list_games' %}">
-                    <button type="submit" name="button" value="games">Games</button>
+                    <button type="submit" name="button" value="games">Return for Games</button>
              </form>
     </div>
 {% endblock %}

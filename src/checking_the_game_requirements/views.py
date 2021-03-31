@@ -1,7 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
-from checking_the_game_requirements.business_logic import filter_values, check_proc, check_memory, check_video
+from checking_the_game_requirements.business_logic import filter_values, \
+    check_proc, check_memory, check_video, proc_output, video_output
 from checking_the_game_requirements.models import Game
 from checking_the_game_requirements.forms import SearchForm
 
@@ -10,7 +10,32 @@ from checking_the_game_requirements.forms import SearchForm
 
 
 def display_main(request):
-    return render(request, 'main_page.html')
+    context = {
+        'form': SearchForm(),
+    }
+    if request.method == 'POST':
+        data = SearchForm(request.POST)
+        hardware = filter_values(data)
+        games = Game.objects.all()
+        game_name = []
+
+        for game in games:
+
+            results_processor = check_proc(game.processor_one.first().name, game.processor_two.first().name,
+                                           hardware['processor'].name)
+            results_memory = check_memory(game.memory, hardware['memory'].size_memory)
+            results_video_card = check_video(game.video_card_one.first().name, game.video_card_two.first().name,
+                                             hardware['video_card'].name)
+
+            if results_processor == 'OK':
+                if results_memory == 'OK':
+                    if results_video_card == 'OK':
+                        game_name += [game.name]
+
+        result = {'games': game_name}
+
+        return render(request, 'list_games_page.html', result)
+    return render(request, 'main_page.html', context)
 
 
 def list_games(request):
@@ -20,40 +45,53 @@ def list_games(request):
 
 
 def check_game(request, my_id):
-    game = Game.objects.filter(pk=my_id).values
+    game = Game.objects.filter(pk=my_id)
 
-    request.session['processor'] = game('processor')[0]['processor'].split('/')
-    request.session['memory'] = game('memory')[0]['memory']
-    request.session['video_card_name'] = game('video_card_name')[0]['video_card_name'].split('/')
-    request.session['video_card_memory'] = game('video_card_memory')[0]['video_card_memory']
-    # request.session['video'] = game('video_card_name')[0]['video_card_name'].split('/')
+    request.session['game_id'] = game[0].id
+    request.session['processor_one'] = game[0].processor_one.first().name
+    request.session['processor_two'] = game[0].processor_two.first().name
+    request.session['memory'] = game[0].memory
+    request.session['video_card_one'] = game[0].video_card_one.first().name
+    request.session['video_card_two'] = game[0].video_card_two.first().name
 
     context = {'games': game,
                'form': SearchForm(),
                }
+
     return render(request, 'check_game.html', context)
 
 
 def filter_components(request):
-    processor = request.session.get('processor')
+    game_id = request.session['game_id']
+    processor_one = request.session.get('processor_one')
+    processor_two = request.session.get('processor_two')
     memory = request.session.get('memory')
-    video_card_name = request.session.get('video_card_name')
-    video_card_memory = request.session.get('video_card_memory')
-    # video = request.session.get('video')
-
-    tmp = processor[0].split(' ')
-    tmp2 = ' '.join(video_card_name[0].split(' ')[1:])
-
-    # print(tmp)
-    print(tmp2)
-    print(video_card_memory)
+    video_card_one = request.session.get('video_card_one')
+    video_card_two = request.session.get('video_card_two')
 
     if request.method == 'POST':
         data = SearchForm(request.POST)
         context = filter_values(data)
 
-        check_proc(tmp[5], context['processor'].name)
-        check_memory(memory, context['memory'].size_memory)
-        check_video(tmp2, context['video_card'])
+        game = Game.objects.filter(pk=game_id)
 
-        return HttpResponse(f"{context['processor']} - {context['memory']} - {context['video_card']}")
+        game_cpu = f'{proc_output(processor_two)} or {proc_output(processor_two)}'
+        user_cpu = proc_output(context['processor'].name)
+
+        game_gpu = f'{video_output(video_card_one)} or {video_output(video_card_two)}'
+        user_gpu = context['video_card'].name
+
+        results = {
+            'Game': game[0].name,
+            'GameCPU': game_cpu,
+            'UserCPU': user_cpu,
+            'GameRAM': memory,
+            'UserRAM': context['memory'].size_memory,
+            'GameGPU': game_gpu,
+            'UserGPU': user_gpu,
+            'CPU': (check_proc(processor_one, processor_two, context['processor'].name)),
+            'RAM': (check_memory(memory, context['memory'].size_memory)),
+            'GPU': (check_video(video_card_one, video_card_two, context['video_card'].name))
+        }
+
+        return render(request, 'results_page.html', results)
