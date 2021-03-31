@@ -3,3 +3,4 @@ gunicorn
 django-heroku
 whitenoise
 djangorestframework
+django_extensions
