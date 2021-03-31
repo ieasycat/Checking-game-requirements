@@ -1,1 +1,1 @@
-Django, gunicorn, django-heroku, whitenoise, djangorestframework
+django, gunicorn, django-heroku, whitenoise, djangorestframework
