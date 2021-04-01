@@ -57,7 +57,6 @@ def check_game(request, my_id):
     context = {'games': game,
                'form': SearchForm(),
                }
-
     return render(request, 'check_game.html', context)
 
 
