@@ -45,16 +45,16 @@ def list_games(request):
 
 
 def check_game(request, my_id):
-    game = Game.objects.filter(pk=my_id)
+    game = Game.objects.get(pk=my_id)
 
-    request.session['game_id'] = game[0].id
-    request.session['processor_one'] = game[0].processor_one.first().name
-    request.session['processor_two'] = game[0].processor_two.first().name
-    request.session['memory'] = game[0].memory
-    request.session['video_card_one'] = game[0].video_card_one.first().name
-    request.session['video_card_two'] = game[0].video_card_two.first().name
+    request.session['game_id'] = game.id
+    request.session['processor_one'] = game.processor_one.first().name
+    request.session['processor_two'] = game.processor_two.first().name
+    request.session['memory'] = game.memory
+    request.session['video_card_one'] = game.video_card_one.first().name
+    request.session['video_card_two'] = game.video_card_two.first().name
 
-    context = {'games': game,
+    context = {'game': game,
                'form': SearchForm(),
                }
     return render(request, 'check_game.html', context)
@@ -72,7 +72,7 @@ def filter_components(request):
         data = SearchForm(request.POST)
         context = filter_values(data)
 
-        game = Game.objects.filter(pk=game_id)
+        game = Game.objects.get(pk=game_id)
 
         game_cpu = f'{proc_output(processor_two)} or {proc_output(processor_two)}'
         user_cpu = proc_output(context['processor'].name)
@@ -81,7 +81,7 @@ def filter_components(request):
         user_gpu = context['video_card'].name
 
         results = {
-            'Game': game[0].name,
+            'Game': game.name,
             'GameCPU': game_cpu,
             'UserCPU': user_cpu,
             'GameRAM': memory,

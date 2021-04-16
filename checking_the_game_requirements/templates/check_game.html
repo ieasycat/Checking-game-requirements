@@ -12,22 +12,32 @@
                 <td><div align="center">VideoCard One</div></td>
                 <td><div align="center">VideoCard Two</div></td>
             </tr>
-                {% for game in games %}
-                    <td><div align="center">{{ game.name }}</div></td>
-                    <td><div align="center">
-                        {{ game.processor_one.first.brand.name  }} {{ game.processor_one.first.name }}
-                    </div></td>
-                    <td><div align="center">
-                        {{ game.processor_two.first.brand.name  }} {{ game.processor_two.first.name }}
-                    </div></td>
-                    <td><div align="center">{{ game.memory }}</div></td>
-                    <td><div align="center">
-                        {{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}
-                    </div></td>
-                    <td><div align="center">
-                        {{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}
-                </div></td>
-                {% endfor %}
+            <td>
+                <div align="center">{{ game.name }}</div>
+            </td>
+            <td>
+                <div align="center">
+                    {{ game.processor_one.first.brand.name }} {{ game.processor_one.first.name }}
+                </div>
+            </td>
+            <td>
+                <div align="center">
+                    {{ game.processor_two.first.brand.name }} {{ game.processor_two.first.name }}
+                </div>
+            </td>
+            <td>
+                <div align="center">{{ game.memory }}</div>
+            </td>
+            <td>
+                <div align="center">
+                    {{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}
+                </div>
+            </td>
+            <td>
+                <div align="center">
+                    {{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}
+                </div>
+            </td>
         </table>
         <p>Select your PC components</p>
             <form action="{% url 'filter_components' %}" method="post">
