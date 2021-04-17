@@ -5,8 +5,23 @@
     <title>
         {% block title %}{% endblock %}
     </title>
+    <style>
+    td {
+        float: inherit;
+        text-align: center;
+     }
+     button {
+        cursor: pointer;
+     }
+    tr.green {
+        background-color: #32CD32;
+     }
+    tr.red {
+        background-color: #FF0000;
+     }
+    </style>
 </head>
 <body>
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 </body>
 </html>

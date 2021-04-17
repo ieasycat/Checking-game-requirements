@@ -1,38 +1,68 @@
 {% extends "base.html" %}
 {% block title %} Results Page {% endblock %}
 {% block content %}
-    <div align="center">
-        <p>You Game: {{ Game }}.</p>
-        <table border=1>
-            <tr>
-                <td><div align="center">Game Hardware</div></td>
-                <td><div align="center">You Hardware</div></td>
-                <td><div align="center">Results</div></td>
-            </tr>
-            <tr>
-                <td><div align="center">{{ GameCPU }}</div></td>
-                <td><div align="center">{{ UserCPU }}</div></td>
-                <td><div align="center">{{ CPU }}</div></td>
-            </tr>
-            <tr>
-                <td><div align="center">{{ GameRAM }}</div></td>
-                <td><div align="center">{{ UserRAM }}</div></td>
-                <td><div align="center">{{ RAM }}</div></td>
-            </tr>
-            <tr>
-                <td><div align="center">{{ GameGPU }}</div></td>
-                <td><div align="center">{{ UserGPU }}</div></td>
-                <td><div align="center">{{ GPU }}</div></td>
-            </tr>
-        </table>
-        <p></p>
-        <form action="{% url 'list_games' %}">
-                    <button type="submit" name="button" value="games">Return for Games</button>
-             </form>
-        <p></p>
-        <form action="{% url 'display_main' %}">
-                    <input type="submit" value="Return main page">
-        </form>
-
-    </div>
+<div align="center">
+    <p>You Game: {{ Game }}.</p>
+    <table border=1>
+        <tr>
+            <td>
+                <div align="center">Game Hardware</div>
+            </td>
+            <td>
+                <div align="center">You Hardware</div>
+            </td>
+            <td>
+                <div align="center">Results</div>
+            </td>
+        </tr>
+        {% if CPU == 'OK' %}
+        <tr class="green">
+            <td>{{ GameCPU }}</td>
+            <td>{{ UserCPU }}</td>
+            <td>{{ CPU }}</td>
+        </tr>
+        {% else %}
+        <tr class="red">
+            <td>{{ GameCPU }}</td>
+            <td>{{ UserCPU }}</td>
+            <td>{{ CPU }}</td>
+        </tr>
+        {% endif %}
+        {% if RAM == 'OK' %}
+        <tr class="green">
+            <td>{{ GameRAM }}</td>
+            <td>{{ UserRAM }}</td>
+            <td>{{ RAM }}</td>
+        </tr>
+        {% else %}
+        <tr class="red">
+        <tr class="red">
+            <td>{{ GameRAM }}</td>
+            <td>{{ UserRAM }}</td>
+            <td>{{ RAM }}</td>
+        </tr>
+        {% endif %}
+        {% if GPU == 'OK' %}
+        <tr class="green">
+            <td>{{ GameGPU }}</td>
+            <td>{{ UserGPU }}</td>
+            <td>{{ GPU }}</td>
+        </tr>
+        {% else %}
+        <tr class="red">
+            <td>{{ GameGPU }}</td>
+            <td>{{ UserGPU }}</td>
+            <td>{{ GPU }}</td>
+        </tr>
+        {% endif %}
+    </table>
+    <p></p>
+    <form action="{% url 'list_games' %}">
+        <button>Return for Games</button>
+    </form>
+    <p></p>
+    <form action="{% url 'display_main' %}">
+        <button>Return main page</button>
+    </form>
+</div>
 {% endblock %}

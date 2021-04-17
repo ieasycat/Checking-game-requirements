@@ -1,55 +1,37 @@
 {% extends "base.html" %}
 {% block title %} Check Game {% endblock %}
 {% block content %}
-    <div align="center">
-        <p>Selected Game.</p>
-        <table border=1>
-            <tr>
-                <td><div align="center">Game</div></td>
-                <td><div align="center">Processor One</div></td>
-                <td><div align="center">Processor Two</div></td>
-                <td><div align="center">Memory</div></td>
-                <td><div align="center">VideoCard One</div></td>
-                <td><div align="center">VideoCard Two</div></td>
-            </tr>
-            <td>
-                <div align="center">{{ game.name }}</div>
-            </td>
-            <td>
-                <div align="center">
-                    {{ game.processor_one.first.brand.name }} {{ game.processor_one.first.name }}
-                </div>
-            </td>
-            <td>
-                <div align="center">
-                    {{ game.processor_two.first.brand.name }} {{ game.processor_two.first.name }}
-                </div>
-            </td>
-            <td>
-                <div align="center">{{ game.memory }}</div>
-            </td>
-            <td>
-                <div align="center">
-                    {{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}
-                </div>
-            </td>
-            <td>
-                <div align="center">
-                    {{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}
-                </div>
-            </td>
-        </table>
-        <p>Select your PC components</p>
-            <form action="{% url 'filter_components' %}" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Check" name="button">
-            </form>
+<div align="center">
+    <p>Selected Game.</p>
+    <table border=1>
+        <tr>
+            <td>Game</td>
+            <td>Processor One</td>
+            <td>Processor Two</td>
+            <td>Memory</td>
+            <td>VideoCard One</td>
+            <td>VideoCard Two</td>
+        </tr>
+        <tr>
+            <td>{{ game.name }}</td>
+            <td>{{ game.processor_one.first.brand.name }} {{ game.processor_one.first.name }}</td>
+            <td>{{ game.processor_two.first.brand.name }} {{ game.processor_two.first.name }}</td>
+            <td>{{ game.memory }}</td>
+            <td>{{ game.video_card_one.first.brand.name }} {{ game.video_card_one.first.name }}</td>
+            <td>{{ game.video_card_two.first.brand.name }} {{ game.video_card_two.first.name }}</td>
+        </tr>
+    </table>
+    <p>Select your PC components</p>
+    <form action="{% url 'filter_components' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Chek</button>
+    </form>
 
 
-        <p></p>
-        <form action="{% url 'list_games' %}">
-                    <button type="submit" name="button" value="games">Return for Games</button>
-             </form>
-    </div>
+    <p></p>
+    <form action="{% url 'list_games' %}">
+        <button>Return for Games</button>
+    </form>
+</div>
 {% endblock %}

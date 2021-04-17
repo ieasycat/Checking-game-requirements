@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% block title %} List Games {% endblock %}
 {% block content %}
-    <div align="center">
-        <p>Games that will go on your PC.</p>
-        <table border="1">
-            <tr>
-                <td><div align="center">Game Name</div></td>
-            </tr>
-
-            {% for game in games %}
-                <tr>
-                    <td><div align="center">{{ game }}</div></td>
-                </tr>
-            {% endfor %}
-
-        </table>
-        <p></p>
-        <form action="{% url 'display_main' %}">
-                    <input type="submit" value="Return main page">
-        </form>
-    </div>
+<div align="center">
+    <p>Games that will go on your PC.</p>
+    {% if games %}
+    <table border="1">
+        <tr>
+            <td>Game Name</td>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Sorry, no game is suitable for these requirements.</p>
+    {% endif %}
+    <p></p>
+    <form action="{% url 'display_main' %}">
+        <button>Return main page</button>
+    </form>
+</div>
 {% endblock %}
