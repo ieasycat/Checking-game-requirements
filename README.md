@@ -1,12 +1,24 @@
-# Вэб приложение проверка требований игр
+# Application for checking the requirements of games
 
-<p>Приложение позволяет выбрать игру, после выбрать свое железо и получить результат, подходит ли оно для игры или нет, а так же, можно вбить свое железо и получить список всех игр, которым оно подходит.</p>
+This application is capable of:
+  - Checking whether your hardware is suitable for a certain game or not.
+  - Getting a list of games that are suitable for your hardware.
 
-## Установка
+This application is installed on Heroku.
 
-<p>:one: Для того, чтобы скачать репозиторий себе на ПК, выполняем команду git@github.com:ieasycat/project3.git</p>
-<p>:two: После нужно установить все фраемворки, для работы. Выполянем python -m pip install -r requirements.txt</p>
+Stack: Django, SQLite
 
-## Мелочи
+## Install
 
-[Проект на хероку](https://checking-the-game.herokuapp.com/)
+- virtualenv -p python3 .venv
+- source .venv/bin/activate
+- git@github.com:ieasycat/project3.git
+- python -m pip install -r requirements.txt
+
+## Launching the application
+
+- python manage.py runserver
+
+## Heroku
+
+[Heroku](https://checking-the-game.herokuapp.com/)
