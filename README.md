@@ -12,7 +12,7 @@ Stack: Django, SQLite
 
 - virtualenv -p python3 .venv
 - source .venv/bin/activate
-- git@github.com:ieasycat/project3.git
+- git@github.com:ieasycat/Checking-game-requirements.git
 - python -m pip install -r requirements.txt
 
 ## Launching the application
