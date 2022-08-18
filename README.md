@@ -4,7 +4,7 @@ This application is capable of:
   - Checking whether your hardware is suitable for a certain game or not.
   - Getting a list of games that are suitable for your hardware.
 
-This application is installed on Heroku.
+This application is deployed on Heroku.
 
 Stack: Django, SQLite
 
